@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.poscodx.mysite.controller.ActionServlet.Action;
 
-public class JoinFormAction implements Action{
+public class LoginFormAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request
-		.getRequestDispatcher("/WEB-INF/views/user/joinform.jsp")
-		.forward(request, response);
+			.getRequestDispatcher("/WEB-INF/views/user/loginform.jsp")
+			.forward(request, response);
 	}
+
 }

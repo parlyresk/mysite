@@ -7,10 +7,6 @@ public class MainServlet extends ActionServlet {
 
 	@Override
 	protected Action getAction(String actionName) {
-		// TODO Auto-generated method stub
 		return new MainAction();
 	}
-
-	
-
 }

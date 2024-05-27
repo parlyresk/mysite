@@ -12,8 +12,8 @@ public class MainAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/main/index.jsp").forward(request, response);
-
+		request
+			.getRequestDispatcher("/WEB-INF/views/main/index.jsp")
+			.forward(request, response);
 	}
-
 }
