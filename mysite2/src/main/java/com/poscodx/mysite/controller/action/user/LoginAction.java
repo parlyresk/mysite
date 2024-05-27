@@ -18,7 +18,7 @@ public class LoginAction implements Action {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		UserVo authUser = new UserDao().findByNoAndPassword(email,password);
+		UserVo authUser = new UserDao().findByEmailAndPassword(email,password);
 		if(authUser == null) {
 			request.setAttribute("email", email);
 			request.setAttribute("result", "fail");
