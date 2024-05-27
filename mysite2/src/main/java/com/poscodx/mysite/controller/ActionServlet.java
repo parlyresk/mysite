@@ -23,7 +23,7 @@ public abstract class ActionServlet extends HttpServlet {
 		}
 		Action action = getAction(actionName);
 		if(action==null) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST,"...");
 			return;
 		}
 		
