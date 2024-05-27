@@ -1,0 +1,54 @@
+package com.poscodx.mysite.controller;
+
+public class UserServlet extends ActionServlet {
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	protected Action getAction(String actionName) {
+		
+		return null;
+	}
+
+	
+//	@Override
+//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		
+//		request.setCharacterEncoding("utf-8");
+//		String action=request.getParameter("a");
+//		
+//		if("joinform".equals(action)) {
+//			request.getRequestDispatcher("/WEB-INF/views/user/joinform.jsp").forward(request, response);
+//		}else if("join".equals(action)) {
+//			String name=request.getParameter("name");
+//			String email=request.getParameter("email");
+//			String password=request.getParameter("password");
+//			String gender=request.getParameter("gender");
+//			
+//			UserVo vo=new UserVo();
+//			vo.setName(name);
+//			vo.setEmail(email);
+//			vo.setPassword(password);
+//			vo.setGender(gender);
+//			
+//			System.out.println(vo);
+//			new UserDao().insert(vo);
+//			
+//			response.sendRedirect(request.getContextPath()+"/user?a=joinsuccess");
+//			
+//			
+//		}else if("joinsuccess".equals(action)) {
+//			request.getRequestDispatcher("/WEB-INF/views/user/joinsuccess.jsp").forward(request, response);
+//			
+//		}else {
+//			response.sendRedirect(request.getContextPath());
+//		}
+//	}
+//
+//	
+//	@Override
+//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		
+//		doGet(request, response);
+//	}
+
+}
