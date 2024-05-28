@@ -15,15 +15,15 @@ public abstract class ActionServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("utf-8");
+//		req.setCharacterEncoding("utf-8");
 		String actionName = Optional.ofNullable(req.getParameter("a")).orElse("");
 
 		Action action = getAction(actionName);
-		if(action == null) {
+		if (action == null) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
-		
+
 		action.execute(req, resp);
 	}
 
@@ -31,7 +31,7 @@ public abstract class ActionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
 	}
-	
+
 	public static interface Action {
 		void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 	}
