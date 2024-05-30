@@ -60,8 +60,6 @@
 	</div>
 </body>
 </html>
-<c:if test='${param.result == "success }'>
-	<script>
-		alert('성공적으로 수정 하였습니다.')
-	</script>
+<c:if test='${param.result == "success" }'>
+	<script>alert('성공적으로 수정 하였습니다.')</script>
 </c:if>
