@@ -17,7 +17,8 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath}/search" method="post">
+				<form id="search"
+					action="${pageContext.request.contextPath}/board?page=${currentPage}" method="post">
 					<input type="text" id="kwd" name="kwd" value=""> <input
 						type="submit" value="찾기">
 				</form>
@@ -39,18 +40,17 @@
 									<img
 										src='${pageContext.servletContext.contextPath}/assets/images/reply.png'>
 								</c:if> <a
-								href="${pageContext.request.contextPath}/board?a=view&no=${boardVo.no}&page=${currentPage}">${boardVo.title}</a>
+								href="${pageContext.request.contextPath}/board?a=view&no=${boardVo.no}&page=${currentPage}&kwd=${kwd}">${boardVo.title}</a>
 							</td>
 							<td>${boardVo.userName}</td>
 							<td>${boardVo.hit}</td>
 							<td>${boardVo.regDate}</td>
-							<td>
-							<c:if test="${sessionScope.authUser.no eq boardVo.userNo}">
-							<a
-								href="${pageContext.request.contextPath}/board?a=delete&no=${boardVo.no}&page=${currentPage}"
-								class="del">삭제</a>
-							</c:if>
-							</td>
+							<td><c:if
+									test="${sessionScope.authUser.no eq boardVo.userNo}">
+									<a
+										href="${pageContext.request.contextPath}/board?a=delete&no=${boardVo.no}&page=${currentPage}&kwd=${kwd}"
+										class="del">삭제</a>
+								</c:if></td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -61,7 +61,8 @@
 						<c:if test="${currentPage > 1}">
 							<li><a href="?page=${currentPage - 1}">◀</a></li>
 						</c:if>
-						<c:forEach var="i" begin="${currentPage}" end="${currentPage+4}">
+						
+						<c:forEach var="i" begin="${currentNavStart}" end="${currentNavEnd}">
 							<c:choose>
 								<c:when test="${i <= totalPages}">
 									<li class="${i == currentPage ? 'selected' : ''}"><a
@@ -82,7 +83,8 @@
 
 				<div class="bottom">
 					<c:if test="${not empty sessionScope.authUser}">
-						<a href="${pageContext.request.contextPath}/board?a=writeform&page=${currentPage}"
+						<a
+							href="${pageContext.request.contextPath}/board?a=writeform&page=${currentPage}&kwd=${kwd}"
 							id="new-book">글쓰기</a>
 					</c:if>
 				</div>

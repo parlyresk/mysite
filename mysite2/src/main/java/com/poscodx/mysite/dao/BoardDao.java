@@ -47,7 +47,7 @@ public class BoardDao {
 	}
 
 	// 리스트 한 페이지에 정해진 수 만큼만 꺼내는 함수
-	public List<BoardVo> findByPage(int page) {
+	public List<BoardVo> findByPage(int page,String kwd) {
 		List<BoardVo> result = new ArrayList<>();
 
 		ResultSet rs = null;
@@ -56,14 +56,31 @@ public class BoardDao {
 
 		try (Connection conn = getConnection();
 
-				PreparedStatement pstmt = conn.prepareStatement(
-						"SELECT b.no, b.title, b.contents, b.hit, b.reg_date, b.g_no, b.o_no, b.depth, b.user_no, u.name AS userName "
-								+ "FROM board b, user u " + "WHERE b.user_no = u.no "
-								+ "ORDER BY b.g_no DESC, b.o_no ASC " + "LIMIT ?, ?");) {
-			pstmt.setInt(1, offset);
-			pstmt.setInt(2, postsPerPage);
-			// 5. SQL 실행
-			rs = pstmt.executeQuery();
+				PreparedStatement pstmt1 = conn.prepareStatement(
+						"select b.no, b.title, b.contents, b.hit, b.reg_date, b.g_no, b.o_no, b.depth, b.user_no, u.name as userName "
+								+ "from board b, user u " + "where b.user_no = u.no "
+								+ "order by b.g_no desc, b.o_no asc " + "limit ?, ?");
+				PreparedStatement pstmt2 = conn.prepareStatement(
+						"select b.no, b.title, b.contents, b.hit, b.reg_date, b.g_no, b.o_no, b.depth, b.user_no, u.name as userName " +
+					             "from board b, user u " +
+					             "where b.user_no = u.no " +
+					             "and (b.title like ? or b.contents like ?) " +
+					             "order by b.g_no desc, b.o_no asc " +
+					             "limit ?, ?");) {
+			if(kwd==null) {
+				pstmt1.setInt(1, offset);
+				pstmt1.setInt(2, postsPerPage);
+				// 5. SQL 실행
+				rs = pstmt1.executeQuery();
+			}
+			else {
+				pstmt2.setString(1, "%" + kwd + "%");
+				pstmt2.setString(2, "%" + kwd + "%");
+				pstmt2.setInt(3, offset);
+				pstmt2.setInt(4, postsPerPage);
+				// 5. SQL 실행
+				rs = pstmt2.executeQuery();
+			}
 
 			// 6. 결과 처리
 			while (rs.next()) {
@@ -100,15 +117,28 @@ public class BoardDao {
 	}
 
 	// 게시글 전체 숫자 반환 함수
-	public int getTotalPosts() {
-
+	public int getTotalPosts(String kwd) {
+		
+		
 		int total = 0;
-		String sql = "select count(*) from board";
+		
+		ResultSet rs=null;
+		
 
 		try (Connection conn = getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery()) {
-
+				PreparedStatement pstmt1 = conn.prepareStatement(
+						"select count(*) from board");
+				PreparedStatement pstmt2 = conn.prepareStatement(
+						"select count(*) from board where title like ? or contents like ?");
+				) {
+			if(kwd==null) {
+				rs=pstmt1.executeQuery();
+			}else {
+				pstmt2.setString(1, "%" + kwd + "%");
+				pstmt2.setString(2, "%" + kwd + "%");
+				rs=pstmt2.executeQuery();
+			}
+			 
 			if (rs.next()) {
 				total = rs.getInt(1);
 			}
@@ -211,14 +241,14 @@ public class BoardDao {
 	public void reply(BoardVo boardVo, BoardVo parentboardVo) {
 		try (Connection conn = getConnection();
 		         PreparedStatement pstmt1 = conn.prepareStatement(
-		                 "update board set o_no = ? where g_no = ? and o_no >=?");
+		                 "update board set o_no = o_no+1 where g_no = ? and o_no >=?");
 				PreparedStatement pstmt2 = conn.prepareStatement(
 						 "insert into board (title, contents, hit, reg_date, g_no, o_no, depth, user_no) "
 		                         + "values (?, ?, 0, now(), ?, ?, ?, ?)");) {
 		        
-		        pstmt1.setLong(1, parentboardVo.getOrderNo());
-		        pstmt1.setLong(2, parentboardVo.getGroupNo());
-		        pstmt1.setLong(3, parentboardVo.getOrderNo());
+		        pstmt1.setLong(1, parentboardVo.getGroupNo());
+		        pstmt1.setLong(2, parentboardVo.getOrderNo());
+		        
 
 		        pstmt1.executeUpdate();
 		        
@@ -268,6 +298,9 @@ public class BoardDao {
 	        e.printStackTrace();
 	    }
 	}
+
+	
+	
 
 	
 

@@ -24,6 +24,7 @@ public class BoardServlet extends ActionServlet {
 			"replyform", new ReplyFormAction(),
 			"reply", new ReplyAction(),
 			"delete", new DeleteAction()
+			
 
 	);
 
