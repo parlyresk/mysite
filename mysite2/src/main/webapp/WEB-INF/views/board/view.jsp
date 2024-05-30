@@ -4,6 +4,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
+
+<%
+	pageContext.setAttribute("newline", "\n");
+%>
 <html>
 <head>
 <title>mysite</title>
@@ -27,7 +32,7 @@
 					<tr>
 						<td class="label">내용</td>
 						<td>
-							<div class="view-content">${boardVo.contents}</div>
+							<div class="view-content">${fn:replace(boardVo.contents, newline, '<br/>')}</div>
 						</td>
 					</tr>
 				</table>
