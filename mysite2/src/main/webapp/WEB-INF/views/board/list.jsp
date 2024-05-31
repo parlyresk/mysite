@@ -19,7 +19,7 @@
 			<div id="board">
 				<form id="search"
 					action="${pageContext.request.contextPath}/board?page=${currentPage}" method="post">
-					<input type="text" id="kwd" name="kwd" value=""> <input
+					<input type="text" id="kwd" name="kwd" value="${kwd}"> <input
 						type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -59,14 +59,14 @@
 				<div class="pager">
 					<ul>
 						<c:if test="${currentPage > 1}">
-							<li><a href="?page=${currentPage - 1}">◀</a></li>
+							<li><a href="?page=${currentPage - 1}&kwd=${kwd}">◀</a></li>
 						</c:if>
 						
 						<c:forEach var="i" begin="${currentNavStart}" end="${currentNavEnd}">
 							<c:choose>
 								<c:when test="${i <= totalPages}">
 									<li class="${i == currentPage ? 'selected' : ''}"><a
-										href="?page=${i}">${i}</a></li>
+										href="?page=${i}&kwd=${kwd}">${i}</a></li>
 								</c:when>
 								<c:otherwise>
 									<li>${i}</li>
@@ -74,7 +74,7 @@
 							</c:choose>
 						</c:forEach>
 						<c:if test="${currentPage < totalPages}">
-							<li><a href="?page=${currentPage + 1}">▶</a></li>
+							<li><a href="?page=${currentPage + 1}&kwd=${kwd}">▶</a></li>
 						</c:if>
 
 					</ul>
