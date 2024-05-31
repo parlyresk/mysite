@@ -16,10 +16,10 @@ public class BoardAction implements Action {
 		
 		String kwd=request.getParameter("kwd");
 		
-
 		String pageParam = request.getParameter("page");
 
-		int page = (pageParam != null) ? Integer.parseInt(pageParam) : 1;
+		int page = (pageParam != null ) ? Integer.parseInt(pageParam) : 1;
+		
 		int totalPosts = new BoardDao().getTotalPosts(kwd);
 		int postsPerPage = 5;
 		int totalPages = (int) Math.ceil((double) totalPosts / postsPerPage);
@@ -37,6 +37,7 @@ public class BoardAction implements Action {
 		request.setAttribute("postsPerPage", postsPerPage);
 		request.setAttribute("currentNavStart", currentNavStart);
 	    request.setAttribute("currentNavEnd", currentNavEnd);
+	    request.setAttribute("search", search);
 	    
 		request.getRequestDispatcher("/WEB-INF/views/board/list.jsp").forward(request, response);
 

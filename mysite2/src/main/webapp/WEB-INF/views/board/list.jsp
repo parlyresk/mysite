@@ -18,8 +18,10 @@
 		<div id="content">
 			<div id="board">
 				<form id="search"
-					action="${pageContext.request.contextPath}/board?page=${currentPage}" method="post">
-					<input type="text" id="kwd" name="kwd" value="${kwd}"> <input
+					action="${pageContext.request.contextPath}/board?page=1" method="post">
+					<input type="text" id="kwd" name="kwd" value="">
+					
+					<input
 						type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
