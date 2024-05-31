@@ -15,7 +15,7 @@ public class BoardAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String kwd=request.getParameter("kwd");
-		System.out.println(kwd);
+		
 
 		String pageParam = request.getParameter("page");
 
