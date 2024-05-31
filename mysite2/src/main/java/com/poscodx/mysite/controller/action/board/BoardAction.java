@@ -29,7 +29,7 @@ public class BoardAction implements Action {
 	    int currentNavStart = ((page - 1) / pageNavSize) * pageNavSize + 1;
 	    int currentNavEnd = currentNavStart+4;
 
-		request.setAttribute("list", new BoardDao().findByPage(page,kwd));
+		request.setAttribute("list", new BoardDao().findByPageAndKeyword(page,kwd));
 		request.setAttribute("kwd", kwd);
 		request.setAttribute("currentPage", page);
 		request.setAttribute("totalPages", totalPages);

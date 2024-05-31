@@ -47,7 +47,7 @@ public class BoardDao {
 	}
 
 	// 리스트 한 페이지에 정해진 수 만큼만 꺼내는 함수
-	public List<BoardVo> findByPage(int page,String kwd) {
+	public List<BoardVo> findByPageAndKeyword(int page,String kwd) {
 		List<BoardVo> result = new ArrayList<>();
 
 		ResultSet rs = null;
