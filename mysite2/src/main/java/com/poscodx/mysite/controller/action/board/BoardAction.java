@@ -37,7 +37,7 @@ public class BoardAction implements Action {
 		request.setAttribute("postsPerPage", postsPerPage);
 		request.setAttribute("currentNavStart", currentNavStart);
 	    request.setAttribute("currentNavEnd", currentNavEnd);
-	    request.setAttribute("search", search);
+	    
 	    
 		request.getRequestDispatcher("/WEB-INF/views/board/list.jsp").forward(request, response);
 
