@@ -21,9 +21,9 @@
 		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="guestbook">
-				<form action="${pageContext.request.contextPath}/guestbook"
+				<form action="${pageContext.request.contextPath}/guestbook/add"
 					method="post">
-					<input type="hidden" name="a" value="add">
+					
 					<table>
 						<tr>
 							<td>이름</td>
@@ -48,7 +48,7 @@
                                     <td>${count-status.index}</td>
                                     <td>${guestbookVo.name}</td>
                                     <td>${guestbookVo.regDate}</td>
-                                    <td><a href="${pageContext.request.contextPath}/guestbook?a=deleteform&no=${guestbookVo.no}">삭제</a></td>
+                                    <td><a href="${pageContext.request.contextPath}/guestbook/delete/${guestbookVo.no}">삭제</a></td>
                                 </tr>
                                 <tr>
                                     <td colspan="4">
