@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.poscodx.mysite.exception.UserRepositoryException;
@@ -13,6 +14,11 @@ import com.poscodx.mysite.vo.UserVo;
 
 @Repository
 public class UserRepository {
+	private SqlSession sqlSession;
+	
+	public UserRepository(SqlSession sqlSession) {
+		this.sqlSession=sqlSession;
+	}
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 
