@@ -40,9 +40,9 @@
 					<a href="${pageContext.request.contextPath}/board">글목록</a>
 					<c:if test="${not empty sessionScope.authUser}">
 						<c:if test="${sessionScope.authUser.no eq boardVo.userNo}">
-							<a href="${pageContext.request.contextPath}/board?a=modifyform&no=${boardVo.no}&page=${page}">글수정</a>
+							<a href="${pageContext.request.contextPath}/board/modify?no=${boardVo.no}&page=${page}">글수정</a>
 						</c:if>
-						<a href="${pageContext.request.contextPath}/board?a=replyform&no=${boardVo.no}&page=${page}">답글작성</a>
+						<a href="${pageContext.request.contextPath}/board/reply?no=${boardVo.no}&page=${page}">답글작성</a>
 					</c:if>
 
 				</div>
