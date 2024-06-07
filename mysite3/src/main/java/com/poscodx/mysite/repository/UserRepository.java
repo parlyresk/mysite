@@ -22,15 +22,15 @@ public class UserRepository {
 	}
 
 	public UserVo findByEmailAndPassword(String email, String password) {
-		return sqlSession.selectOne("findByEmailAndPassword",Map.of("email",email,"password",password));
+		return sqlSession.selectOne("user.findByEmailAndPassword",Map.of("email",email,"password",password));
 	}
 
 	public UserVo findByNo(Long no) {
-		return sqlSession.selectOne("findByNo",no);
+		return sqlSession.selectOne("user.findByNo",no);
 	}
 
 	public void update(UserVo vo) {
-		sqlSession.update("update",vo);
+		sqlSession.update("user.update",vo);
 		
 		
 	}

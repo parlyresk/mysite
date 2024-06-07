@@ -19,7 +19,7 @@
 			<div id="board">
 				<form id="search"
 					action="${pageContext.request.contextPath}/board?page=1" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
+					<input type="text" id="keyword" name="keyword" value="">
 					
 					<input
 						type="submit" value="찾기">
@@ -42,7 +42,7 @@
 									<img
 										src='${pageContext.servletContext.contextPath}/assets/images/reply.png'>
 								</c:if> <a
-								href="${pageContext.request.contextPath}/board?a=view&no=${boardVo.no}&page=${currentPage}&kwd=${kwd}">${boardVo.title}</a>
+								href="${pageContext.request.contextPath}/board?a=view&no=${boardVo.no}&page=${currentPage}&keyword=${keyword}">${boardVo.title}</a>
 							</td>
 							<td>${boardVo.userName}</td>
 							<td>${boardVo.hit}</td>
@@ -50,7 +50,7 @@
 							<td><c:if
 									test="${sessionScope.authUser.no eq boardVo.userNo}">
 									<a
-										href="${pageContext.request.contextPath}/board?a=delete&no=${boardVo.no}&page=${currentPage}&kwd=${kwd}"
+										href="${pageContext.request.contextPath}/board?a=delete&no=${boardVo.no}&page=${currentPage}&keyword=${keyword}"
 										class="del">삭제</a>
 								</c:if></td>
 						</tr>
@@ -61,14 +61,14 @@
 				<div class="pager">
 					<ul>
 						<c:if test="${currentPage > 1}">
-							<li><a href="?page=${currentPage - 1}&kwd=${kwd}">◀</a></li>
+							<li><a href="?page=${currentPage - 1}&keyword=${keyword}">◀</a></li>
 						</c:if>
 						
 						<c:forEach var="i" begin="${currentNavStart}" end="${currentNavEnd}">
 							<c:choose>
 								<c:when test="${i <= totalPages}">
 									<li class="${i == currentPage ? 'selected' : ''}"><a
-										href="?page=${i}&kwd=${kwd}">${i}</a></li>
+										href="?page=${i}&keyword=${keyword}">${i}</a></li>
 								</c:when>
 								<c:otherwise>
 									<li>${i}</li>
@@ -76,7 +76,7 @@
 							</c:choose>
 						</c:forEach>
 						<c:if test="${currentPage < totalPages}">
-							<li><a href="?page=${currentPage + 1}&kwd=${kwd}">▶</a></li>
+							<li><a href="?page=${currentPage + 1}&keyword=${keyword}">▶</a></li>
 						</c:if>
 
 					</ul>
@@ -86,7 +86,7 @@
 				<div class="bottom">
 					<c:if test="${not empty sessionScope.authUser}">
 						<a
-							href="${pageContext.request.contextPath}/board?a=writeform&page=${currentPage}&kwd=${kwd}"
+							href="${pageContext.request.contextPath}/board?a=writeform&page=${currentPage}&keyword=${keyword}"
 							id="new-book">글쓰기</a>
 					</c:if>
 				</div>
