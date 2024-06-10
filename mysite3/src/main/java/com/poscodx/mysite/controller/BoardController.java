@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.poscodx.mysite.security.Auth;
 import com.poscodx.mysite.service.BoardService;
 import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.mysite.vo.UserVo;
@@ -55,10 +56,11 @@ public class BoardController {
 	    if (authUser == null) {
 	        return "redirect:/";
 	    }
-	    boardService.deleteContents(session, no, authUser.getNo());
+	    boardService.deleteContents(no, authUser.getNo());
 	    return "redirect:/board?page=" + page + "&keyword=" + keyword;
 	}
 	
+	@Auth
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public String write(HttpSession session) {
 		// access control
@@ -69,6 +71,7 @@ public class BoardController {
 	    return "board/write";
 	}
 	
+	@Auth
 	@RequestMapping(value = "/write",method = RequestMethod.POST)
 	public String write(HttpSession session, @ModelAttribute BoardVo boardVo,@RequestParam(value="page",defaultValue = "1") int page, 
 			@RequestParam(value="keyword",defaultValue = "") String keyword) {

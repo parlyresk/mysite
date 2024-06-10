@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +44,7 @@ public class BoardService {
 		boardRepository.updateWithTitleAndContentsByNo(vo.getTitle(), vo.getContents(), vo.getNo());
 	}
 
-	public void deleteContents(HttpSession session, Long boardNo, Long userNo) {
+	public void deleteContents(Long boardNo, Long userNo) {
 		
 		boardRepository.deleteByNoAndUserNo(boardNo,userNo);
 	}
