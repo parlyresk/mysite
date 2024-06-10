@@ -15,10 +15,10 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board">
-					<input type = "hidden" name = "a" value="reply">
-					<input type = "hidden" name = "page" value="${page }">
+				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/reply">
 					<input type="hidden" name="no" value="${no}">
+					<input type = "hidden" name = "page" value="${page }">
+					<input type="hidden" name="keyword" value="${keyword}">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>

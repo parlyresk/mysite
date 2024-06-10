@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,7 +30,7 @@ public class BoardController {
         model.addAllAttributes(map);
         model.addAttribute("keyword", keyword);
         
-        System.out.println(model);
+        
         
         return "board/list";
     }
@@ -79,7 +78,7 @@ public class BoardController {
 	        return "redirect:/";
 	    }
 	    boardVo.setUserNo(authUser.getNo());
-	    System.out.println(boardVo);
+	    
 		boardService.addContents(boardVo);
 	    
 	    
@@ -87,14 +86,14 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-	public String modify(HttpSession session, @PathVariable("no") Long no, Model model) {
+	public String modify(HttpSession session, @RequestParam("no") Long no, Model model) {
 		// access control
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null) {
 			return "redirect:/";
 		}
 		////////////////////////
-		
+		System.out.println("modify GET come");
 		BoardVo boardVo = boardService.getContents(no, authUser.getNo());
 		model.addAttribute("boardVo", boardVo);
 		return "board/modify";
@@ -104,8 +103,8 @@ public class BoardController {
 	public String modify(
 		HttpSession session, 
 		BoardVo boardVo,
-		@RequestParam(value="page") int page,
-		@RequestParam(value="keyword") String keyword) {		
+		@RequestParam(value="page",defaultValue = "1") int page, 
+		@RequestParam(value="keyword",defaultValue = "") String keyword) {		
 		// access control
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null) {
@@ -114,14 +113,15 @@ public class BoardController {
 		////////////////////////
 		
 		boardVo.setUserNo(authUser.getNo());
+		
 		boardService.updateContents(boardVo);
 		return "redirect:/board?page=" + page + "&keyword=" + keyword;
 	}
 	
-	@RequestMapping(value="/reply/{no}")	
+	@RequestMapping(value="/reply")	
 	public String reply(
 		HttpSession session,
-		@PathVariable("no") Long no,
+		@RequestParam("no") Long no,
 		Model model) {
 		// access control
 		UserVo authUser = (UserVo)session.getAttribute("authUser");

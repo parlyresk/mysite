@@ -15,7 +15,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board?a=modify&no=${boardVo.no}&page=${page}&keyword=${keyword}">
+				<form class="board-form" method="post" action="${pageContext.request.contextPath}/board/modify?no=${boardVo.no}&page=${page}&keyword=${keyword}">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글수정</th>
@@ -27,7 +27,7 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="content">${boardVo.contents }</textarea>
+								<textarea id="content" name="contents">${boardVo.contents }</textarea>
 							</td>
 						</tr>
 					</table>
