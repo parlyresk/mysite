@@ -27,9 +27,20 @@ public class BoardRepository {
 
 	// 게시물 작성(insert) 함수
 	public void insert(BoardVo boardVo) {
-
+		
+		
 		sqlSession.insert("board.insert", boardVo);
+		
+		
+		
+		
+		
 
+	}
+	public void reply(BoardVo boardVo) {
+		sqlSession.update("board.replyUpdate", boardVo);
+		sqlSession.insert("board.replyInsert", boardVo);
+		
 	}
 
 	// 게시물 보기?
@@ -65,11 +76,7 @@ public class BoardRepository {
 		return groupNoAndOrderNoAndDepth;
 	}
 
-	public void reply(BoardVo boardVo) {
-		sqlSession.update("board.replyUpdate", boardVo);
-		sqlSession.insert("board.replyInsert", boardVo);
 
-	}
 
 	public void deleteByNoAndUserNo(Long no, Long userNo) {
 		sqlSession.delete("board.deleteByNoAndUserNo", Map.of("no", no, "userNo", userNo));
@@ -94,5 +101,7 @@ public class BoardRepository {
 				Map.of("page", page, "keyword", keyword, "offset", offset, "postsPerPage", postsPerPage));
 
 	}
+
+	
 
 }

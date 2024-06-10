@@ -93,7 +93,7 @@ public class BoardController {
 			return "redirect:/";
 		}
 		////////////////////////
-		System.out.println("modify GET come");
+		
 		BoardVo boardVo = boardService.getContents(no, authUser.getNo());
 		model.addAttribute("boardVo", boardVo);
 		return "board/modify";
@@ -118,11 +118,31 @@ public class BoardController {
 		return "redirect:/board?page=" + page + "&keyword=" + keyword;
 	}
 	
-	@RequestMapping(value="/reply")	
+	@RequestMapping(value = "/reply", method = RequestMethod.GET)
+	public String reply(HttpSession session, @RequestParam("no") Long no,Model model,
+			@RequestParam(value="page",defaultValue = "1") int page, @RequestParam(value="keyword",defaultValue = "") String keyword) {
+		// access control
+				UserVo authUser = (UserVo)session.getAttribute("authUser");
+				if(authUser == null) {
+					return "redirect:/";
+				}
+				
+				
+				model.addAttribute("no", no);
+				model.addAttribute("page", page);
+				model.addAttribute("keyword", keyword);
+				
+			
+	    return "board/reply";
+	}
+	
+	@RequestMapping(value="/reply", method=RequestMethod.POST)	
 	public String reply(
 		HttpSession session,
 		@RequestParam("no") Long no,
-		Model model) {
+		@ModelAttribute BoardVo boardVo,
+		@RequestParam(value="page",defaultValue = "1") int page, 
+		@RequestParam(value="keyword",defaultValue = "") String keyword) {
 		// access control
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null) {
@@ -130,12 +150,17 @@ public class BoardController {
 		}
 		////////////////////////
 		
-		BoardVo boardVo = boardService.getContents(no);
-		boardVo.setOrderNo(boardVo.getOrderNo() + 1);
-		boardVo.setDepth(boardVo.getDepth() + 1);
 		
-		model.addAttribute("boardVo", boardVo);
 		
-		return "board/reply";
+		
+		BoardVo parentboardVo = boardService.getContents(no);
+		boardVo.setUserNo(authUser.getNo());
+		boardVo.setGroupNo(parentboardVo.getGroupNo());
+		boardVo.setOrderNo(parentboardVo.getOrderNo() + 1);
+		boardVo.setDepth(parentboardVo.getDepth() + 1);
+		
+		boardService.replyContents(boardVo);
+		
+		return "redirect:/board?page=" + page + "&keyword=" + keyword;
 	}
 }

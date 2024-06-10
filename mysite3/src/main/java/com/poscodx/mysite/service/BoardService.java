@@ -22,6 +22,10 @@ public class BoardService {
 		
 		boardRepository.insert(vo);
 	}
+	public void replyContents(BoardVo vo) {
+		
+		boardRepository.reply(vo);
+	}
 
 	public BoardVo getContents(Long no) {
 		BoardVo vo=boardRepository.findByBoardNo(no);
@@ -77,4 +81,6 @@ public class BoardService {
 
         return map;
 	}
+
+	
 }
