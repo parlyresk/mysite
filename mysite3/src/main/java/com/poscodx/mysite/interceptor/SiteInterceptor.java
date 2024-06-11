@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.poscodx.mysite.service.SiteService;
+import com.poscodx.mysite.vo.SiteVo;
 
 public class SiteInterceptor implements HandlerInterceptor {
 	private SiteService siteService;
@@ -17,7 +18,11 @@ public class SiteInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		// TODO Auto-generated method stub
+		SiteVo siteVo = (SiteVo)request.getServletContext().getAttribute("sitevo");
+		if(siteVo == null) {
+			siteVo = siteService.getSite();
+			request.getServletContext().setAttribute("sitevo", siteVo);
+		}
 		return true;
 	}
 
