@@ -55,7 +55,7 @@ public class UserController {
 		return "user/update";
 	}
 	
-	@Auth
+	@Auth(value="hello")
 	@RequestMapping(value="/update",method=RequestMethod.POST)
 	public String update(@AuthUser UserVo authUser, UserVo vo) {
 		// access control

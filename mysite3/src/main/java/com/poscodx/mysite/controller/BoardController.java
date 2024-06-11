@@ -29,7 +29,8 @@ public class BoardController {
 
 		model.addAllAttributes(map);
 		model.addAttribute("keyword", keyword);
-
+		
+		
 		return "board/list";
 	}
 
