@@ -32,7 +32,7 @@ public class AdminController {
 	public String main(Model model) {
 		SiteVo vo = siteService.getSite();
 		model.addAttribute("siteVo", vo);
-		System.out.println(vo);
+		
 		
 		
 		return "admin/main";

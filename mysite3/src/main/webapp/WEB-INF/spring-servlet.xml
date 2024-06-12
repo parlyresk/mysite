@@ -93,8 +93,8 @@
 	</bean>
 
 	<!-- mvc url-resource mapping -->
-	<mvc:resources mapping="/assets/upload-images/**"
-		location="file:/mysite-uploads/" />
+	<mvc:resources mapping="/upload-images/**"
+		location="file:/mysite-files/" />
 
 	<context:annotation-config />
 	<context:component-scan
