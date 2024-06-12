@@ -6,7 +6,7 @@
 	pageEncoding="UTF-8"%>
 
 <div id="header">
-	<h1>MySite</h1>
+	<h1>${siteVo.title }</h1>
 	<ul>
 		<c:choose>
 			<c:when test='${empty authUser }'>

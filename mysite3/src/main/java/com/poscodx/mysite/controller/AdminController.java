@@ -32,16 +32,15 @@ public class AdminController {
 	public String main(Model model) {
 		SiteVo vo = siteService.getSite();
 		model.addAttribute("siteVo", vo);
-		
-		
-		System.out.println("main");
 		System.out.println(vo);
+		
+		
 		return "admin/main";
 	}
 
 	@RequestMapping("/main/update")
 	public String update(SiteVo vo, @RequestParam(value="file") MultipartFile file) {
-		System.out.println("asd");
+		
 		String profile = fileUploadService.restore(file);
 		if(profile != null) {
 			vo.setProfile(profile);

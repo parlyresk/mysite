@@ -19,9 +19,11 @@ public class FileUploadService {
 
 		try {
 			File uploadDirectory = new File(SAVE_PATH);
-
+			
+			System.out.println("restore come");
 			if (!uploadDirectory.exists()) {
 				uploadDirectory.mkdirs();
+				System.out.println("mkdirs come");
 			}
 
 			if (file.isEmpty()) {
