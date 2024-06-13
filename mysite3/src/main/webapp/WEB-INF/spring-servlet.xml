@@ -81,6 +81,19 @@
 		</property>
 	</bean>
 
+
+	<!-- 6. MessageSource -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>messages/messages_en</value>
+				<value>messages/messages_ko</value>
+			</list>
+		</property>
+	</bean>
+
+
 	<!-- Multipart Resolver -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

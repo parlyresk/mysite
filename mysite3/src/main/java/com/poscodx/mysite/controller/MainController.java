@@ -1,5 +1,8 @@
 package com.poscodx.mysite.controller;
 
+import javax.servlet.ServletContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +14,9 @@ import com.poscodx.mysite.vo.UserVo;
 
 @Controller
 public class MainController {
+	
+	@Autowired
+	private ServletContext servletContext;
 	private SiteService siteService;
 	
 	
@@ -21,8 +27,9 @@ public class MainController {
 	
     @RequestMapping({"/", "/main"})
     public String index(Model model) {
-    	SiteVo siteVo = siteService.getSite();
-    	model.addAttribute("siteVo", siteVo);
+    	SiteVo vo = siteService.getSite();
+    	servletContext.setAttribute("sitevo", vo);
+		model.addAttribute("sitevo", vo);
     	
         return "main/index";
     }
