@@ -1,6 +1,6 @@
 [src/main/java]
 	com
-	 |--- douzone
+	 |--- poscodx
 	 |		|--- mysite	
 	 |		|		|--- config
 	 |		|		|		|--- AppConfig.java
@@ -19,7 +19,7 @@
 
 [src/main/resources]
 	com
-	 |--- douzone
+	 |--- poscodx
 	 |		|--- mysite
 	 |		|		|--- app
 	 |		|		|	  |--- jdbc.properties
@@ -31,8 +31,8 @@
 	 |		|		|--- web
 	 |		|		|	  |--- fileupload.properties
 	 |		|		|	  |--- messages
-	 |		|		|	  |       |--- messages_ko.properties
-	 |		|		|	  |       |--- messages_en.properties
+	 |		|		|	  |       |--- message_ko.properties
+	 |		|		|	  |       |--- message_en.properties
 	 
 	 
 	 
