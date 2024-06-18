@@ -21,18 +21,19 @@
 	com
 	 |--- poscodx
 	 |		|--- mysite
-	 |		|		|--- app
-	 |		|		|	  |--- jdbc.properties
-	 |		|		|	  |--- mybatis
-	 |		|		|	  		|--- configuration.xml
-	 |		|		|	  		|--- mappers
-	 |		|		|	  		|		|--- board.xml
-	 |		|		|	  		|		|--- user.xml
-	 |		|		|--- web
-	 |		|		|	  |--- fileupload.properties
-	 |		|		|	  |--- messages
-	 |		|		|	  |       |--- message_ko.properties
-	 |		|		|	  |       |--- message_en.properties
+	 |		|		|--- config
+	 |		|		|		|--- app
+	 |		|		|		|	  |--- jdbc.properties
+	 |		|		|		|	  |--- mybatis
+	 |		|		|		|	  		|--- configuration.xml
+	 |		|		|		|	  		|--- mappers
+	 |		|		|		|	  		|		|--- board.xml
+	 |		|		|		|	  		|		|--- user.xml
+	 |		|		|		|--- web
+	 |		|		|		|	  |--- fileupload.properties
+	 |		|		|		|	  |--- messages
+	 |		|		|		|	  |       |--- message_ko.properties
+	 |		|		|		|	  |       |--- message_en.properties
 	 
 	 
 	 
