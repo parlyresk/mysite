@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<select id="getTotalPosts" parameterType="string" resultType="int">
+		<choose>
+			<when test="_parameter == null or _parameter == ''">
+				<![CDATA[ 
+					select count(*) from board
+				]]>
+				
+				
+			</when>
+			<otherwise>
+				<![CDATA[ 
+					select count(*) from board where (title like '%${_parameter }%' or contents like '%${_parameter  }%')
+				]]>
+			</otherwise>
+		</choose>
+		
+	</select>
+	
+	<insert id="insert" parameterType="boardvo">
+		<![CDATA[ 
+			insert into board (no, title, contents, hit, reg_date, g_no, o_no, depth, user_no) 
+			select null, #{title}, #{contents}, 0, now(), coalesce(max(g_no), 0) + 1, 1, 0, #{userNo} from board
+		]]>
+		
+		
+	</insert>
+	
+	<select id="findByBoardNo" parameterType="long" resultType="boardvo">
+		<![CDATA[ 
+			select	no,
+				title,
+				contents,
+				g_no as groupNo,
+				o_no as orderNo,
+				depth,
+				user_no as userNo
+		   
+			from board where no=#{no}
+		]]>
+		
+	</select>
+	
+	<select id="findByNoAndUserNo" parameterType="map" resultType="boardvo">
+		<![CDATA[
+		select	no,
+				title,
+				contents
+		   from board
+		  where no = #{no }
+		    and user_no = #{userNo }		
+		]]>		
+	</select>
+	
+	<update id="updateWithTitleAndContentsByNo" parameterType="map">
+		<![CDATA[ 
+			update board set title = #{title}, contents = #{contents} where no = #{no}
+		]]>
+		
+	</update>
+	
+	<select id="findGroupAndOrderNoAndDepthByNo" parameterType="long" resultType="map">
+		<![CDATA[ 
+			select g_no as groupNo, o_no as orderNo,depth from board where no = #{no}
+		]]>
+		
+	</select>
+	
+	<update id="replyUpdate" parameterType="boardvo">
+		<![CDATA[ 
+			update board set o_no = o_no+1 where g_no = #{groupNo} and o_no >=#{orderNo}
+		]]>
+	</update>
+	
+	<insert id="replyInsert" parameterType="boardvo">
+		<![CDATA[ 
+			insert into board (title, contents, hit, reg_date, g_no, o_no, depth, user_no) 
+			                         values (#{title}, #{contents}, 0, now(), #{groupNo}, #{orderNo}, #{depth}, #{userNo})
+		]]>
+	</insert>
+	
+	<delete id="deleteByNoAndUserNo" parameterType="map">
+		<![CDATA[ 
+			delete from board where no = #{no} and user_no = #{userNo}
+		]]>
+	</delete>
+	
+	<update id="increaseHit" parameterType="long">
+		<![CDATA[ 
+			update board set hit = hit + 1 where no = #{no}
+		]]>
+		
+	</update>
+	
+	<select id="findByPageAndKeyword" parameterType="map" resultType="boardvo">
+		<choose>
+			<when test="keyword == null or keyword == ''">
+				<![CDATA[ 
+					select b.no as no, b.title as title, b.contents as contents, b.hit as hit, 
+					date_format(b.reg_date, '%Y-%m-%d %p %h:%i:%s') as regDate, b.g_no as groupNo, b.o_no as orderNo, 
+					b.depth as depth, b.user_no as userNo, u.name as userName 
+					from board b, user u where b.user_no = u.no 
+					order by b.g_no desc, b.o_no asc 
+					limit #{offset} , #{postsPerPage}
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[ 
+					select b.no as no, b.title as title, b.contents as contents, b.hit as hit, 
+					date_format(b.reg_date, '%Y-%m-%d %p %h:%i:%s') as regDate, b.g_no as groupNo, b.o_no as orderNo, 
+					b.depth as depth, b.user_no as userNo, u.name as userName 
+					from board b, user u 
+					where b.user_no = u.no 
+					and (b.title like '%${keyword }%' or b.contents like '%${keyword }%')
+					order by b.g_no desc, b.o_no asc 
+					limit #{offset} , #{postsPerPage}
+				]]>
+				
+			</otherwise>
+		</choose>
+	</select>
+	
+</mapper>
