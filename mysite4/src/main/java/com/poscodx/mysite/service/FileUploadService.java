@@ -6,17 +6,24 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
+@PropertySource("classpath:com/poscodx/mysite/config/web/fileupload.properties")
 public class FileUploadService {
-	private static String SAVE_PATH = "/mysite-files";
-	private static String URL_PATH = "/upload-images";
+	
+	@Autowired
+	Environment env;
 
 	public String restore(MultipartFile file) {
 		String url = null;
-
+		String SAVE_PATH = env.getProperty("fileupload.uploadLocation");
+		String URL_PATH = env.getProperty("fileupload.resourceUrl");
+		
 		try {
 			File uploadDirectory = new File(SAVE_PATH);
 			
