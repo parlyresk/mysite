@@ -29,7 +29,7 @@
 	<div id="languages">
 		<c:choose>
 			<c:when test='${language == "en" }'>
-				<a href="" data-lang="ko">KR</a><a href="" data-lang="en">EN</a>
+				<a href="" data-lang="ko">KR</a><a href="" data-lang="en" class="active">EN</a>
 			</c:when>
 			<c:otherwise>
 				<a href="" data-lang="ko" class="active">KR</a><a href="" data-lang="en">EN</a>
