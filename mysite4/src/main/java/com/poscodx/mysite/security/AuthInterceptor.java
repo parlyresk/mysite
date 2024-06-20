@@ -39,10 +39,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 		if(auth == null) {
 			return true;
 		}
-		
-		
-		
-		
 		//6. @Auth가 붙어있기 때문에 인증(Authentication) 여부 확인
 		HttpSession session = request.getSession();
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
