@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
@@ -22,7 +21,6 @@ import com.poscodx.mysite.security.UserDetailsServiceImpl;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	
 	@Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return new WebSecurityCustomizer() {
@@ -38,19 +36,43 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    	String s = HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
-    	http.formLogin().loginPage("/user/login").loginProcessingUrl("/user/auth")
-    	.usernameParameter("email").passwordParameter("password").defaultSuccessUrl("/").failureUrl("/user/login?result=fail")
-    	.and().csrf().disable()
-    	.authorizeHttpRequests(registry -> {
-			/* ACL */
-    		registry.requestMatchers(new RegexRequestMatcher("^/user/update$",null))
-    			.hasAnyRole("ADMIN","USER")
-    			.anyRequest()
-    			.permitAll();
-			});
+    	http
+    		.logout()
+    		.logoutUrl("/user/logout")
+    		.and()
+    		
+       		.formLogin()
+       		.loginPage("/user/login")
+       		.loginProcessingUrl("/user/auth")
+       		.usernameParameter("email")
+       		.passwordParameter("password")
+       		.defaultSuccessUrl("/")
+       		.failureUrl("/user/login?result=fail")
+       		.and()
+       		
+       		.csrf()
+       		.disable()
     	
-        return http.build();
+       		.authorizeHttpRequests(registry -> {
+       			registry
+       				/* ACL */
+   					.requestMatchers(new RegexRequestMatcher("^/admin/?.*$", null))
+   					.hasRole("ADMIN")
+
+   					.requestMatchers(new RegexRequestMatcher("^/board/?(write|reply|delete|modify)?/.*$", null))
+   					.hasAnyRole("ADMIN", "USER")
+
+   					.requestMatchers(new RegexRequestMatcher("^/user/update$", null))
+   					.hasAnyRole("ADMIN", "USER")
+       	       		
+       				.anyRequest()
+       	       		.permitAll();
+			});
+//       		.exceptionHandling(exceptionHandlingConfigurer -> {
+//       			exceptionHandlingConfigurer.accessDeniedPage("/WEB-INF/views/error/403.jsp")
+//			});
+       	
+    	return http.build();
     }
     
     // Authentication Manager
@@ -72,4 +94,5 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService() {
     	return new UserDetailsServiceImpl();
     }
+    
 }

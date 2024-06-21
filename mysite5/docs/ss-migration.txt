@@ -1,0 +1,40 @@
+--- Spring Security 적용하기!
+
+1. Dependency추가
+	1) spring-security-web
+	2) spring-security-config
+	3) spring-security-taglibs
+
+2. Spring Security 보안 설정(기본)
+	1) SecurityConfig 작성
+	2) DelegatingFilterProxy 설정
+
+3. security Config 설정1 - 작동유무
+	1) FormLoginConfigurer 설정
+		http.formLogin()
+	2) Access Control Authorization Configurer 설정
+		http.authroizeHttpRequests
+		'/user/update' 접근 제어하기
+	3) 로그인 페이지 바꾸기
+		formLogin().loginPage("/user/login")
+
+4. 로그인 처리
+1) AuthenticationManager 설정
+2) loginProcessUrl('/user/auth')
+3) .usernameParameter("email").
+4) .passwordParameter("password")
+5) UserDetailsServiceImpl 구현 & UserDetails 구현
+6) 기존 UserService 수정: PasswordEncoder로 비밀번호 암호화 하기
+7) DefaultSuccessurl('/')
+8) failureUrl("/user/login?result=fail")
+9) JSP UI 처리(Spring security Tag Library)
+
+5. 로그아웃처리
+1) Logout Configurer 설정
+	http.logout()
+2) .logoutUrl("/user/logout")
+3) .logoutSuccessUrl("/")
+
+6. Authority 처리
+	UserDetailsImpl.getAuthority() 오버라이딩
+	
