@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.poscodx.mysite.security.Auth;
 import com.poscodx.mysite.service.UserService;
 import com.poscodx.mysite.vo.UserVo;
 
@@ -59,7 +58,7 @@ public class UserController {
 	
 	
 	
-	@Auth
+	
 	@RequestMapping(value="/update",method=RequestMethod.GET)
 	public String update(Authentication authentication, Model model) {
 //      1. SecurityContextHolder(Spring Security ThreadLocal Helper Class) 기반		
@@ -77,7 +76,7 @@ public class UserController {
 		return "user/update";
 	}
 	
-	@Auth(value="hello")
+	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
 	public String update(@AuthUser UserVo authUser, UserVo vo) {
 		// access control
