@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.poscodx.mysite.security.UserDetailsImpl;
 import com.poscodx.mysite.vo.UserVo;
 
 @Repository
@@ -33,12 +34,20 @@ public class UserRepository {
 		
 		return sqlSession.selectOne("user.findByEmail",email);
 	}
+	
+public UserDetailsImpl findByEmail2(String email) {
+		
+	return sqlSession.selectOne("user.findByEmail2",email);
+	}
 
 	public void update(UserVo vo) {
 		sqlSession.update("user.update",vo);
 		
 		
 	}
+
+
+	
 
 
 	
