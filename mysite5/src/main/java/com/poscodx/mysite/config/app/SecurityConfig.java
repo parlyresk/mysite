@@ -40,8 +40,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     	String s = HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
     	http.formLogin().loginPage("/user/login").loginProcessingUrl("/user/auth")
-    	.usernameParameter("email").passwordParameter("password").defaultSuccessUrl("/").failureUrl("/user/login")
-    	.and()
+    	.usernameParameter("email").passwordParameter("password").defaultSuccessUrl("/").failureUrl("/user/login?result=fail")
+    	.and().csrf().disable()
     	.authorizeHttpRequests(registry -> {
 			/* ACL */
     		registry.requestMatchers(new RegexRequestMatcher("^/user/update$",null))

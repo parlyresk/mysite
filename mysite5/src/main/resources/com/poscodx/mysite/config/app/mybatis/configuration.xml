@@ -4,6 +4,7 @@
 	<typeAliases>
 		<typeAlias type="com.poscodx.mysite.vo.GuestbookVo" alias="guestbookvo" />
 		<typeAlias type="com.poscodx.mysite.vo.UserVo" alias="uservo" />
+		<typeAlias type="com.poscodx.mysite.security.UserDetailsImpl" alias="userdetails" />
 		<typeAlias type="com.poscodx.mysite.vo.BoardVo" alias="boardvo" />
 		<typeAlias type="com.poscodx.mysite.vo.SiteVo" alias="sitevo" />
 	</typeAliases>
