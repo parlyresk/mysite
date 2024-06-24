@@ -71,21 +71,19 @@ public class UserController {
 
 		UserVo authUser = (UserVo)authentication.getPrincipal();
 		UserVo vo = userService.getUser(authUser.getNo());
-		model.addAttribute("userVo",vo);
+		model.addAttribute("userVo", vo);
 		
 		return "user/update";
 	}
 	
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public String update(@AuthUser UserVo authUser, UserVo vo) {
+	public String update(Authentication authentication, UserVo vo) {
 		// access control
 		
-		if(authUser==null) {
-			return "redirect:/";
-		}
-		
+		UserVo authUser = (UserVo)authentication.getPrincipal();
 		vo.setNo(authUser.getNo());
+		
 		userService.update(vo);
 		
 		authUser.setName(vo.getName());
