@@ -1,4 +1,4 @@
-package com.poscodx.mysite.config.app;
+package com.poscodx.mysite.config;
 
 import java.io.IOException;
 
