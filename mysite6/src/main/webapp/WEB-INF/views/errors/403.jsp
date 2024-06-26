@@ -9,7 +9,7 @@
 <body>
 	<h1>400 BAD_REQUEST Custom~</h1>
 	<p>
-		나쁜 요청이어요오오오
+		요청을 찾을 수 없습니다.
 	</p>
 </body>
 </html>

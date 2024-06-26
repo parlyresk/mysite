@@ -7,9 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>400 BAD_REQUEST Custom~</h1>
+	<h1>FORBIDDEN 403 custom</h1>
 	<p>
-		나쁜 요청이어요오오오
+		접근 할 수 없 어요 오 오오
 	</p>
 </body>
 </html>

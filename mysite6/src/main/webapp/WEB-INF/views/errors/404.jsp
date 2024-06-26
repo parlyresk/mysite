@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>404 NOT FOUND</h1>
+	<h1>404 NOT FOUND Custom</h1>
 	<p>
 		요청을 찾을 수 없습니다.
 	</p>
