@@ -1,4 +1,4 @@
-# spring configuration
+ # spring configuration
 spring:
    application:
       name: mysite
@@ -16,14 +16,15 @@ spring:
          
    # mvc
    mvc:
-      static-path-pattern: /assets/**
+      throw-exception-if-no-handler-found: true
+      # static-path-pattern: /assets/**
       # view:
         # prefix: /WEB-INF/views/
          # suffix: .jsp
    
    # web
    web:
-      resources:
+     resources:
          static-locations: file:/mysite-uploads/, classpath:assets/
    
    # message resources(internationalization, i18n)

@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -84,11 +85,11 @@
 				<!-- pager 추가 -->
 
 				<div class="bottom">
-					<c:if test="${not empty sessionScope.authUser}">
+					<sec:authorize access="isAuthenticated()">
 						<a
 							href="${pageContext.request.contextPath}/board/write?page=${currentPage}&keyword=${keyword}"
 							id="new-book">글쓰기</a>
-					</c:if>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>
