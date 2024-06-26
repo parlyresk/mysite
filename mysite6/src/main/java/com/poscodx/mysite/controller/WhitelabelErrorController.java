@@ -18,7 +18,7 @@ public class WhitelabelErrorController implements ErrorController{
 		return "errors/404";
 		
 	}
-	
+//	
 	@RequestMapping("/500")
 	public String _500() {
 		
