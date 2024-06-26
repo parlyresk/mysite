@@ -1,0 +1,30 @@
+# spring configuration
+spring:
+   application:
+      name: myweb
+   
+   devtools:
+      livereload:
+         enabled: true
+         
+   thymeleaf:
+      check-template-location: true
+      mode: HTML
+      prefix: classpath:templates/
+      suffix: .html
+      view-names: th/*
+      cache: false
+   mvc:
+      view:
+         prefix: /WEB-INF/views/
+         suffix: .jsp
+         
+         
+# server configuration
+server:
+   port: 8088
+   servlet:
+      context-path: /
+      encoding:
+         charset: utf-8
+         enabled: true
