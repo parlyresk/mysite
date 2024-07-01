@@ -2,7 +2,10 @@ package com.poscodx.mysite.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.LocaleResolver;
@@ -14,7 +17,11 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.thymeleaf.spring5.ISpringTemplateEngine;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import com.poscodx.mysite.event.ApplicationContextEventListener;
 import com.poscodx.mysite.interceptor.SiteInterceptor;
@@ -24,6 +31,16 @@ public class MvcConfig implements WebMvcConfigurer {
 	@Autowired
 	private Environment env;
 
+	// Message Source
+	@Bean
+	public MessageSource messageSource() {
+		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+		messageSource.setBasename("messages/message");
+		messageSource.setDefaultEncoding("utf-8");
+
+		return messageSource;
+	}
+
 	// Locale Resolver
 	@Bean
 	public LocaleResolver localeResolver() {
@@ -32,6 +49,32 @@ public class MvcConfig implements WebMvcConfigurer {
 		localeResolver.setCookieHttpOnly(false);
 
 		return localeResolver;
+	}
+
+	// Thymeleaf Template Engine
+	@Bean
+	public SpringResourceTemplateResolver templateResolver(ApplicationContext applicationContext) {
+		SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+
+		templateResolver.setApplicationContext(applicationContext);
+		templateResolver.setPrefix("classpath:templates/");
+		templateResolver.setSuffix(".html");
+		templateResolver.setTemplateMode(TemplateMode.HTML);
+		templateResolver.setCharacterEncoding("utf-8");
+		templateResolver.setCacheable(false);
+
+		return templateResolver;
+	}
+
+	@Bean
+	public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver) {
+		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+
+		templateEngine.setTemplateResolver(templateResolver);
+		templateEngine.setEnableSpringELCompiler(true);
+		templateEngine.setTemplateEngineMessageSource(messageSource());
+
+		return templateEngine;
 	}
 
 	// View Resolver
@@ -57,6 +100,20 @@ public class MvcConfig implements WebMvcConfigurer {
 		viewResolver.setTemplateEngine(templateEngine);
 		viewResolver.setCharacterEncoding("UTF-8");
 		viewResolver.setOrder(1);
+
+		return viewResolver;
+	}
+
+	// JSP View Resolver
+	@Bean
+	public ViewResolver jspViewResolver() {
+		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+
+		viewResolver.setViewClass(JstlView.class);
+		viewResolver.setViewNames("views/*");
+		viewResolver.setPrefix("/WEB-INF/");
+		viewResolver.setSuffix(".jsp");
+		viewResolver.setOrder(0);
 
 		return viewResolver;
 	}

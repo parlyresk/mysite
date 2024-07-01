@@ -22,20 +22,23 @@ public class BoardController {
 	private BoardService boardService;
 
 	@RequestMapping("")
-	public String index(Model model, @RequestParam(value = "page", defaultValue = "1") int page,
+	public String index(Authentication authentication,Model model, @RequestParam(value = "page", defaultValue = "1") int page,
 			@RequestParam(value = "keyword", defaultValue = "") String keyword) {
 
 		Map<String, Object> map = boardService.getContentsList(page, keyword);
 
 		model.addAllAttributes(map);
 		model.addAttribute("keyword", keyword);
+		model.addAttribute("principal",authentication != null ? authentication.getPrincipal() : null);
 		
 		
 		return "board/list";
 	}
 
 	@RequestMapping("/view")
-	public String view(@RequestParam("no") Long no, Model model,
+	public String view(
+			Authentication authentication,
+			@RequestParam("no") Long no, Model model,
 			@RequestParam(value = "page", defaultValue = "1") int page,
 			@RequestParam(value = "keyword", defaultValue = "") String keyword) {
 
@@ -44,6 +47,7 @@ public class BoardController {
 		model.addAttribute("no", no);
 		model.addAttribute("page", page);
 		model.addAttribute("keyword", keyword);
+		model.addAttribute("principal",authentication != null ? authentication.getPrincipal() : null);
 		return "board/view";
 	}
 
