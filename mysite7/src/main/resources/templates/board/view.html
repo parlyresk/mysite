@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>mysite</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link th:href="@{/css/board.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="container">
+        <th:block th:include="includes/header"></th:block>
+        <div id="content">
+            <div id="board" class="board-form">
+                <table class="tbl-ex">
+                    <tr>
+                        <th colspan="2">글보기</th>
+                    </tr>
+                    <tr>
+                        <td class="label">제목</td>
+                        <td th:text="${boardVo.title}"></td>
+                    </tr>
+                    <tr>
+                        <td class="label">내용</td>
+                        <td>
+                            <div class="view-content" th:utext="${#strings.replace(boardVo.contents, '\n', '<br/>')}"></div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="bottom">
+                    <a th:href="@{/board}">글목록</a>
+                    <th:block th:if="${principal != null}">
+                        <th:block th:if="${principal.no == boardVo.userNo}">
+                            <a th:href="@{/board/modify(no=${boardVo.no}, page=${page})}">글수정</a>
+                        </th:block>
+                        <a th:href="@{/board/reply(no=${boardVo.no}, page=${page})}">답글작성</a>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+        <th:block th:include="includes/navigation :: {menu='board'}"></th:block>
+        <th:block th:include="includes/footer"></th:block>
+    </div>
+</body>
+</html>

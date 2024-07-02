@@ -54,16 +54,18 @@ public class SecurityConfig {
        		.loginProcessingUrl("/user/auth")
        		.usernameParameter("email")
        		.passwordParameter("password")
-       		.defaultSuccessUrl("/").failureHandler(new AuthenticationFailureHandler() {
-
+       		.defaultSuccessUrl("/")
+       		// .failureUrl("/user/login?result=fail")
+       		.failureHandler(new AuthenticationFailureHandler() {
 				@Override
 				public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 						AuthenticationException exception) throws IOException, ServletException {
 					request.setAttribute("email", request.getParameter("email"));
-					request.getRequestDispatcher("/user/login").forward(request, response);
+					request
+						.getRequestDispatcher("/user/login")
+						.forward(request, response);
 				}
-			})
-//       		.failureUrl("/user/login?result=fail")
+       		})
        		.and()
        		
        		.csrf()
@@ -75,7 +77,7 @@ public class SecurityConfig {
    					.requestMatchers(new RegexRequestMatcher("^/admin/?.*$", null))
    					.hasRole("ADMIN")
 
-   					.requestMatchers(new RegexRequestMatcher("^/board/?(write|reply|delete|modify)/.*$", null))
+   					.requestMatchers(new RegexRequestMatcher("^/board/?(write|reply|delete|modify).*$", null))
    					.hasAnyRole("ADMIN", "USER")
 
    					.requestMatchers(new RegexRequestMatcher("^/user/update$", null))
@@ -103,7 +105,7 @@ public class SecurityConfig {
     
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-    	return new BCryptPasswordEncoder(4 /* 4~31 */);
+    	return new BCryptPasswordEncoder(4 /* 4 ~ 31 */);
     }
     
     @Bean

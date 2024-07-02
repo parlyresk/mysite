@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title th:text="${@site.title}"></title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link th:href="@{/css/board.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="container">
+        <th:block th:include="includes/header"></th:block>
+        <div id="content">
+            <div id="board">
+                <form id="search" th:action="@{/board(page=1)}" method="post">
+                    <input type="text" id="keyword" name="keyword" th:value="${keyword}">
+                    <input type="submit" value="찾기">
+                </form>
+                <table class="tbl-ex">
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>글쓴이</th>
+                        <th>조회수</th>
+                        <th>작성일</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    <th:block th:with="count=${#lists.size(list)}">
+                        <tr th:each="boardVo, status : ${list}">
+                            <td th:text="${totalPosts - status.index - (currentPage - 1) * postsPerPage}"></td>
+                            <td th:style="'text-align:left; padding-left:' + ${20 * boardVo.depth} + 'px'">
+                                <span th:if="${boardVo.depth > 0}">
+                                    <img th:src="@{/assets/images/reply.png}" />
+                                </span>
+                                <a th:href="@{/board/view(no=${boardVo.no}, page=${currentPage}, keyword=${keyword})}" th:text="${boardVo.title}"></a>
+                            </td>
+                            <td th:text="${boardVo.userName}"></td>
+                            <td th:text="${boardVo.hit}"></td>
+                            <td th:text="${boardVo.regDate}"></td>
+                            <td>
+                                <span th:if="${principal != null and principal.no == boardVo.userNo}">
+                                    <a th:href="@{/board/delete(no=${boardVo.no}, page=${currentPage}, keyword=${keyword})}" class="del">삭제</a>
+                                </span>
+                            </td>
+                        </tr>
+                    </th:block>
+                </table>
+
+                <!-- pager 추가 -->
+                <div class="pager">
+                    <ul>
+                        <li th:if="${currentPage > 1}">
+                            <a th:href="@{/board(page=${currentPage - 1}, keyword=${keyword})}">◀</a>
+                        </li>
+                        <th:block th:each="i : ${#numbers.sequence(currentNavStart, currentNavEnd)}">
+                            <li th:if="${i <= totalPages}" th:classappend="${i == currentPage} ? 'selected'">
+                                <a th:href="@{/board(page=${i}, keyword=${keyword})}" th:text="${i}"></a>
+                            </li>
+                            <li th:unless="${i <= totalPages}" th:text="${i}"></li>
+                        </th:block>
+                        <li th:if="${currentPage < totalPages}">
+                            <a th:href="@{/board(page=${currentPage + 1}, keyword=${keyword})}">▶</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- pager 추가 -->
+
+                <div class="bottom">
+                    <th:block sec:authorize="isAuthenticated()">
+                        <a th:href="@{/board/write(page=${currentPage}, keyword=${keyword})}" id="new-book">글쓰기</a>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+        <th:block th:include="includes/navigation"></th:block>
+        <th:block th:include="includes/footer"></th:block>
+    </div>
+</body>
+</html>

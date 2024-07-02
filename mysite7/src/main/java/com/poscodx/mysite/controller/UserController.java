@@ -20,10 +20,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value="/join",method=RequestMethod.GET)
+	@RequestMapping(value="/join", method=RequestMethod.GET)
 	public String join(@ModelAttribute UserVo vo) {
 		return "user/join";
-		
 	}
 	
 	@RequestMapping(value="/join",method=RequestMethod.POST)

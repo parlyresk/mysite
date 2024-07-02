@@ -1,0 +1,43 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>mysite</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link th:href="@{/css/board.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="container">
+        <th:block th:include="includes/header"></th:block>
+        <div id="content">
+            <div id="board">
+                <form class="board-form" method="post" th:action="@{/board/reply}">
+                    <input type="hidden" name="no" th:value="${no}">
+                    <input type="hidden" name="page" th:value="${page}">
+                    <input type="hidden" name="keyword" th:value="${keyword}">
+                    <table class="tbl-ex">
+                        <tr>
+                            <th colspan="2">글쓰기</th>
+                        </tr>
+                        <tr>
+                            <td class="label">제목</td>
+                            <td><input type="text" name="title" value=""></td>
+                        </tr>
+                        <tr>
+                            <td class="label">내용</td>
+                            <td>
+                                <textarea id="content" name="contents"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="bottom">
+                        <a th:href="@{/board}">취소</a>
+                        <input type="submit" value="등록">
+                    </div>
+                </form>                
+            </div>
+        </div>
+        <th:block th:include="includes/navigation"></th:block>
+        <th:block th:include="includes/footer"></th:block>
+    </div>
+</body>
+</html>
