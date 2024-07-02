@@ -36,7 +36,7 @@ spring:
    # web
    web:
      resources:
-         static-locations: file:/mysite-uploads/, classpath:assets/
+         static-locations: file:/mysite-files/, classpath:assets/
    
    # message resources(internationalization, i18n)
    messages:

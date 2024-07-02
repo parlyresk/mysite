@@ -17,6 +17,7 @@
                 </form>
                 <table class="tbl-ex">
                     <tr>
+                    
                         <th>번호</th>
                         <th>제목</th>
                         <th>글쓴이</th>
@@ -29,13 +30,14 @@
                             <td th:text="${totalPosts - status.index - (currentPage - 1) * postsPerPage}"></td>
                             <td th:style="'text-align:left; padding-left:' + ${20 * boardVo.depth} + 'px'">
                                 <span th:if="${boardVo.depth > 0}">
-                                    <img th:src="@{/assets/images/reply.png}" />
+                                    <img th:src="@{/images/reply.png}" />
                                 </span>
                                 <a th:href="@{/board/view(no=${boardVo.no}, page=${currentPage}, keyword=${keyword})}" th:text="${boardVo.title}"></a>
                             </td>
                             <td th:text="${boardVo.userName}"></td>
                             <td th:text="${boardVo.hit}"></td>
                             <td th:text="${boardVo.regDate}"></td>
+                            
                             <td>
                                 <span th:if="${principal != null and principal.no == boardVo.userNo}">
                                     <a th:href="@{/board/delete(no=${boardVo.no}, page=${currentPage}, keyword=${keyword})}" class="del">삭제</a>
